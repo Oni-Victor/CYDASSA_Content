@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYDASSA — Cybersecurity Career Paths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0e0f;
+    --bg2: #141618;
+    --bg3: #1c1f21;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f0ee;
+    --text2: #9a9a96;
+    --text3: #6a6a67;
+    --green: #1fd68a;
+    --green-dark: #14a869;
+    --green-bg: rgba(31,214,138,0.1);
+    --red: #f26b4e;
+    --red-bg: rgba(242,107,78,0.1);
+    --blue: #5b9cf6;
+    --blue-bg: rgba(91,156,246,0.1);
+    --amber: #f5a623;
+    --amber-bg: rgba(245,166,35,0.1);
+    --purple: #a78cf8;
+    --purple-bg: rgba(167,140,248,0.1);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 3rem 1.5rem 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg2);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(31,214,138,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    border: 1px solid rgba(31,214,138,0.3);
+    background: var(--green-bg);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span { color: var(--green); }
+  .hero p { color: var(--text2); max-width: 520px; margin: 0 auto 1.5rem; font-size: 14px; }
+
+  /* Tabs */
+  .tab-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    background: var(--bg2);
+    color: var(--text2);
+    transition: all 0.15s;
+  }
+  .tab:hover { border-color: var(--border2); color: var(--text); }
+  .tab.active { background: var(--green); color: #000; border-color: var(--green); font-weight: 500; }
+
+  /* Sections */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Stats */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  .stat-number { font-size: 26px; font-weight: 600; color: var(--green); font-family: 'Space Mono', monospace; }
+  .stat-label { font-size: 12px; color: var(--text2); margin-top: 6px; line-height: 1.4; }
+
+  .hook-box {
+    border-left: 2px solid var(--green);
+    padding: 1rem 1.25rem;
+    background: var(--green-bg);
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 1.75rem;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .hook-box strong { color: var(--green); }
+
+  .analogy-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.75rem;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .analogy-icon { font-size: 22px; flex-shrink: 0; color: var(--green); margin-top: 2px; }
+  .analogy-box strong { color: var(--text); }
+
+  .section-heading { font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+  .section-sub { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 1.25rem; }
+
+  /* Role cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.75rem;
+  }
+  .role-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1rem 0.875rem;
+    transition: border-color 0.15s;
+  }
+  .role-card:hover { border-color: var(--border2); }
+  .role-card.red-team { border-top: 2px solid var(--red); }
+  .role-card.blue-team { border-top: 2px solid var(--blue); }
+  .role-card.grc { border-top: 2px solid var(--amber); }
+  .role-card.green-team { border-top: 2px solid var(--green); }
+  .role-card.purple-team { border-top: 2px solid var(--purple); }
+
+  .role-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .tag-red { background: var(--red-bg); color: var(--red); }
+  .tag-blue { background: var(--blue-bg); color: var(--blue); }
+  .tag-amber { background: var(--amber-bg); color: var(--amber); }
+  .tag-green { background: var(--green-bg); color: var(--green); }
+  .tag-purple { background: var(--purple-bg); color: var(--purple); }
+
+  .role-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .role-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .role-cert { font-size: 11px; color: var(--green); font-weight: 500; margin-top: 8px; font-family: 'Space Mono', monospace; }
+
+  /* Myths */
+  .myth-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.75rem; }
+  .myth-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .myth-divider { background: var(--border); width: 1px; align-self: stretch; }
+  .myth-label { font-size: 11px; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .myth-label.bad { color: var(--red); }
+  .myth-label.good { color: var(--green); }
+  .myth-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .myth-text.bad { color: var(--text3); }
+
+  /* Roadmap */
+  .roadmap { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.75rem; }
+  .roadmap-year { display: flex; gap: 14px; align-items: stretch; }
+  .year-connector { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; }
+  .year-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 12px;
+  }
+  .year-line { width: 1px; background: var(--border); flex: 1; margin: 6px 0; }
+  .roadmap-year:last-child .year-line { display: none; }
+  .year-content {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.875rem 1.1rem;
+    flex: 1;
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+  .year-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .year-tasks { display: flex; flex-wrap: wrap; gap: 6px; }
+  .year-task {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+
+  /* Social */
+  .social-tabs { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .social-tab {
+    padding: 6px 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    background: var(--bg2);
+    color: var(--text2);
+    transition: all 0.15s;
+  }
+  .social-tab:hover { border-color: var(--border2); color: var(--text); }
+  .social-tab.active { background: var(--green); color: #000; border-color: var(--green); font-weight: 500; }
+
+  .social-content { display: none; }
+  .social-content.active { display: block; }
+
+  .social-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .platform-label {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    margin-bottom: 10px;
+  }
+  .social-text {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.75;
+    white-space: pre-wrap;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg3);
+    cursor: pointer;
+    color: var(--text2);
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--border2); color: var(--text); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+  .slide-deck { display: flex; flex-direction: column; gap: 8px; }
+  .slide {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+  }
+  .slide-num { font-size: 10px; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 6px; }
+  .slide-headline { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .slide-body { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+  .cta-box {
+    background: var(--bg2);
+    border: 1px solid var(--green-bg);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  .cta-box p { font-size: 13px; color: var(--text2); margin-bottom: 1rem; line-height: 1.65; }
+  .cta-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background: var(--green);
+    color: #000;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+  .cta-btn:hover { background: var(--green-dark); color: #fff; }
+
+  .divider { height: 1px; background: var(--border); margin: 1.75rem 0; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.5rem; }
+    .myth-item { grid-template-columns: 1fr; }
+    .myth-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-badge">CYDASSA — Cybersecurity & Data Science Students Association</div>
+    <h1>Cybersecurity Career Paths:<br><span>Which Role Fits You?</span></h1>
+    <p>4.5 million open cybersecurity jobs by 2026. The talent gap is real — and you're the generation that fills it. Here's everything you need to know.</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('overview', this)">Overview</button>
+    <button class="tab" onclick="switchTab('roles', this)">Career Roles</button>
+    <button class="tab" onclick="switchTab('myths', this)">Myth Busters</button>
+    <button class="tab" onclick="switchTab('roadmap', this)">Your Roadmap</button>
+    <button class="tab" onclick="switchTab('social', this)">Social Content</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section active">
+    <div class="hook-box">
+      <strong>Wild stat:</strong> There are more open cybersecurity jobs right now than qualified people to fill them — by millions. The question isn't whether there's a job for you. The question is <em>which one</em>.
+    </div>
+
+    <p class="section-heading">By the numbers</p>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">4.5M</div>
+        <div class="stat-label">Open cyber jobs expected by 2026</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">33%</div>
+        <div class="stat-label">Job growth 2023–2033 (BLS)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">46%</div>
+        <div class="stat-label">Companies with unfilled cyber roles (ISACA 2024)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$125K</div>
+        <div class="stat-label">Median US annual pay for info security analysts</div>
+      </div>
+    </div>
+
+    <p class="section-heading">The two main lanes</p>
+    <div class="analogy-box">
+      <div class="analogy-icon">🏦</div>
+      <div>
+        <strong>Think of it like a bank vault.</strong> The <strong>red team</strong> is hired to break in and find security gaps before real criminals do. The <strong>blue team</strong> monitors the alarms, patches the walls, and responds the moment something looks off. Both are essential. Both are very well paid.
+      </div>
+    </div>
+
+    <p class="section-heading">Why this matters for you, right now</p>
+    <p class="section-sub">The field is growing faster than universities can produce graduates. That means earlier opportunities, faster career progression, and salaries that outpace most tech roles. You don't need to be a CS genius — you need the right skills, certifications, and hands-on experience. Use the tabs above to explore everything.</p>
+
+    <div class="cta-box">
+      <p>Ready to figure out which role fits your personality and skills? Explore career roles, bust the myths you've heard, follow your 3-year roadmap, and grab ready-to-post social content for CYDASSA's channels.</p>
+      <button class="cta-btn" onclick="switchTab('roles', document.querySelectorAll('.tab')[1])">Explore career roles →</button>
+    </div>
+  </div>
+
+  <!-- ROLES -->
+  <div id="roles" class="section">
+    <p class="section-heading">🔴 Red team (offensive)</p>
+    <p class="section-sub">These roles simulate real attacks to find weaknesses before bad actors do. If you love puzzles, breaking things, and thinking like an attacker — this lane is for you.</p>
+
+    <div class="card-grid">
+      <div class="role-card red-team">
+        <div class="role-tag tag-red">Red Team</div>
+        <h3>Penetration Tester</h3>
+        <p>Legally hack into systems to expose vulnerabilities. Real example: WannaCry (2017) exploited unpatched Windows systems in 150 countries — a pen tester could have flagged it first.</p>
+        <div class="role-cert">→ eJPT → OSCP</div>
+      </div>
+      <div class="role-card red-team">
+        <div class="role-tag tag-red">Red Team</div>
+        <h3>Red Team Operator</h3>
+        <p>Full simulated attack campaigns against organizations. You run entire infiltration scenarios to test human and technical defenses from end to end.</p>
+        <div class="role-cert">→ OSCP → CRTO</div>
+      </div>
+      <div class="role-card red-team">
+        <div class="role-tag tag-red">Red Team</div>
+        <h3>Vulnerability Researcher</h3>
+        <p>Hunt zero-days in software and systems. Work with bug bounty programs or security firms to responsibly disclose major flaws before exploitation.</p>
+        <div class="role-cert">→ Hack The Box, CVE credits</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p class="section-heading">🔵 Blue team (defensive)</p>
+    <p class="section-sub">Protect, monitor, and respond. If you love patterns, problem-solving under pressure, and being the last line of defense — this is your lane.</p>
+
+    <div class="card-grid">
+      <div class="role-card blue-team">
+        <div class="role-tag tag-blue">Blue Team</div>
+        <h3>SOC Analyst</h3>
+        <p>First responder of cyber. Monitors security operations centers, detects threats, and coordinates incident response across the organization.</p>
+        <div class="role-cert">→ Security+ → CySA+</div>
+      </div>
+      <div class="role-card blue-team">
+        <div class="role-tag tag-blue">Blue Team</div>
+        <h3>Incident Responder</h3>
+        <p>When a breach happens, you lead cleanup and containment. The Equifax 2017 breach exposed 147 million records — incident responders were critical to the $700M aftermath.</p>
+        <div class="role-cert">→ Splunk, ELK Stack</div>
+      </div>
+      <div class="role-card blue-team">
+        <div class="role-tag tag-blue">Blue Team</div>
+        <h3>Cloud Security Engineer</h3>
+        <p>Protects AWS, Azure, and GCP environments. Fastest-growing specialty as every company migrates to cloud infrastructure.</p>
+        <div class="role-cert">→ AWS IAM, Azure Sentinel</div>
+      </div>
+      <div class="role-card blue-team">
+        <div class="role-tag tag-blue">Blue Team</div>
+        <h3>Identity Security Specialist</h3>
+        <p>Manages who has access to what. The Okta 2023 breach showed how session token compromise can threaten entire customer bases of a platform.</p>
+        <div class="role-cert">→ IAM, Zero Trust principles</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p class="section-heading">🟡 GRC (governance, risk & compliance)</p>
+    <p class="section-sub">Not all cyber roles touch code. GRC professionals bridge security and business — and they're in serious demand, with no coding required.</p>
+
+    <div class="card-grid">
+      <div class="role-card grc">
+        <div class="role-tag tag-amber">GRC</div>
+        <h3>GRC Analyst</h3>
+        <p>Ensures organizations follow security regulations and frameworks. Combines legal, policy, and technical knowledge. Great entry point for non-CS students.</p>
+        <div class="role-cert">→ NIST, ISO 27001 frameworks</div>
+      </div>
+      <div class="role-card grc">
+        <div class="role-tag tag-amber">GRC</div>
+        <h3>Compliance & Risk Manager</h3>
+        <p>Builds organizational risk frameworks and policy infrastructure. Often earns as much as technical roles — with less time in the terminal.</p>
+        <div class="role-cert">→ CISM, CRISC (senior path)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MYTHS -->
+  <div id="myths" class="section">
+    <p class="section-heading">Common myths — busted</p>
+    <p class="section-sub">Before you decide cybersecurity "isn't for you" — let's address the nonsense you've probably heard.</p>
+
+    <div class="myth-list">
+      <div class="myth-item">
+        <div>
+          <div class="myth-label bad">✗ Myth</div>
+          <div class="myth-text bad">It's all technical — you need to be a coding wizard</div>
+        </div>
+        <div class="myth-divider"></div>
+        <div>
+          <div class="myth-label good">✓ Reality</div>
+          <div class="myth-text">Communication, critical thinking, and problem-solving matter just as much. GRC roles need almost zero coding at entry level.</div>
+        </div>
+      </div>
+      <div class="myth-item">
+        <div>
+          <div class="myth-label bad">✗ Myth</div>
+          <div class="myth-text bad">You must be a CS or IT major</div>
+        </div>
+        <div class="myth-divider"></div>
+        <div>
+          <div class="myth-label good">✓ Reality</div>
+          <div class="myth-text">Many successful cyber professionals come from law, psychology, business, and finance backgrounds. Certifications fill the technical gap.</div>
+        </div>
+      </div>
+      <div class="myth-item">
+        <div>
+          <div class="myth-label bad">✗ Myth</div>
+          <div class="myth-text bad">Cybersecurity only deals with outside hackers</div>
+        </div>
+        <div class="myth-divider"></div>
+        <div>
+          <div class="myth-label good">✓ Reality</div>
+          <div class="myth-text">Insider threats and accidental data leaks are some of the biggest risks. Internal security is an entire career lane unto itself.</div>
+        </div>
+      </div>
+      <div class="myth-item">
+        <div>
+          <div class="myth-label bad">✗ Myth</div>
+          <div class="myth-text bad">The IT/security team works alone in a silo</div>
+        </div>
+        <div class="myth-divider"></div>
+        <div>
+          <div class="myth-label good">✓ Reality</div>
+          <div class="myth-text">Cybersecurity is deeply collaborative — legal, HR, finance, and operations teams all work with security professionals daily.</div>
+        </div>
+      </div>
+      <div class="myth-item">
+        <div>
+          <div class="myth-label bad">✗ Myth</div>
+          <div class="myth-text bad">Entry-level jobs are easy to get with a degree alone</div>
+        </div>
+        <div class="myth-divider"></div>
+        <div>
+          <div class="myth-label good">✓ Reality</div>
+          <div class="myth-text">Most "entry-level" roles expect hands-on experience. Labs, CTF competitions, certifications, and internships are non-negotiable. Start early.</div>
+        </div>
+      </div>
+      <div class="myth-item">
+        <div>
+          <div class="myth-label bad">✗ Myth</div>
+          <div class="myth-text bad">A high GPA is your most important asset</div>
+        </div>
+        <div class="myth-divider"></div>
+        <div>
+          <div class="myth-label good">✓ Reality</div>
+          <div class="myth-text">Hands-on lab experience, certifications, and a demonstrable portfolio matter far more to hiring managers than GPA. Build, don't just study.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div id="roadmap" class="section">
+    <p class="section-heading">Your 3-year student roadmap</p>
+    <p class="section-sub">This isn't theoretical — it's the exact path that gets you job-ready by graduation. Don't wait until Year 4 to start.</p>
+
+    <div class="roadmap">
+      <div class="roadmap-year">
+        <div class="year-connector">
+          <div class="year-dot" style="background:rgba(31,214,138,0.15); color:var(--green);">Y2</div>
+          <div class="year-line"></div>
+        </div>
+        <div class="year-content">
+          <div class="year-title">Year 2 — Build the foundation</div>
+          <div class="year-tasks">
+            <span class="year-task">CompTIA Security+</span>
+            <span class="year-task">TryHackMe labs</span>
+            <span class="year-task">Python scripting</span>
+            <span class="year-task">Linux command line</span>
+            <span class="year-task">TCP/IP & networking</span>
+            <span class="year-task">VirtualBox + Metasploitable</span>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-year">
+        <div class="year-connector">
+          <div class="year-dot" style="background:rgba(91,156,246,0.15); color:var(--blue);">Y3</div>
+          <div class="year-line"></div>
+        </div>
+        <div class="year-content">
+          <div class="year-title">Year 3 — Get your hands dirty</div>
+          <div class="year-tasks">
+            <span class="year-task">Land an internship</span>
+            <span class="year-task">eJPT certification</span>
+            <span class="year-task">Hack The Box</span>
+            <span class="year-task">Pick your specialization</span>
+            <span class="year-task">IT support role (part-time)</span>
+            <span class="year-task">BSides conference</span>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-year">
+        <div class="year-connector">
+          <div class="year-dot" style="background:rgba(245,166,35,0.15); color:var(--amber);">Y4</div>
+          <div class="year-line"></div>
+        </div>
+        <div class="year-content">
+          <div class="year-title">Year 4 — Go job-ready</div>
+          <div class="year-tasks">
+            <span class="year-task">CySA+ or CEH</span>
+            <span class="year-task">Build a portfolio</span>
+            <span class="year-task">(ISC)² student chapter</span>
+            <span class="year-task">Network on LinkedIn</span>
+            <span class="year-task">Apply: CrowdStrike, Palo Alto</span>
+            <span class="year-task">Document CTF wins</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p class="section-heading">Specialization paths</p>
+    <div class="card-grid">
+      <div class="role-card green-team">
+        <div class="role-tag tag-green">Cloud Security</div>
+        <h3>AWS / Azure track</h3>
+        <p>Learn AWS IAM and Azure Sentinel. Fastest-growing niche in the field with premium salaries and massive enterprise demand.</p>
+      </div>
+      <div class="role-card grc">
+        <div class="role-tag tag-amber">GRC track</div>
+        <h3>Policy & compliance</h3>
+        <p>Study NIST and ISO 27001 frameworks. An excellent entry path for non-technical or law/business students entering cyber.</p>
+      </div>
+      <div class="role-card purple-team">
+        <div class="role-tag tag-purple">Threat Hunting</div>
+        <h3>Detection & analysis</h3>
+        <p>Get hands-on with Splunk or ELK Stack. Follow thought leaders like Katie Nickels (threat intel) and Marcus Hutchins (malware research).</p>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <p>Which year are you in right now? Drop it in the comments on any CYDASSA post and we'll point you to your next step. Join the community for exclusive access to hands-on labs, mentors, and career workshops.</p>
+      <button class="cta-btn">Join CYDASSA →</button>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div id="social" class="section">
+    <p class="section-heading">Ready-to-post social content</p>
+    <p class="section-sub">Pick your platform. Copy the content. Post it. Crafted to drive real engagement for CYDASSA's student audience.</p>
+
+    <div class="social-tabs">
+      <button class="social-tab active" onclick="switchSocial('carousel', this)">Instagram Carousel</button>
+      <button class="social-tab" onclick="switchSocial('linkedin', this)">LinkedIn Post</button>
+      <button class="social-tab" onclick="switchSocial('twitter', this)">X / Twitter Thread</button>
+      <button class="social-tab" onclick="switchSocial('script', this)">60-Sec Video Script</button>
+    </div>
+
+    <div id="carousel" class="social-content active">
+      <div class="slide-deck">
+        <div class="slide">
+          <div class="slide-num">Slide 1 — Hook</div>
+          <div class="slide-headline">4.5 million cybersecurity jobs. Not enough people to fill them. One of them could be yours.</div>
+          <div class="slide-body">Caption: Swipe to find out which role fits you → #CYDASSA #CybersecurityCareers #StudentLife</div>
+        </div>
+        <div class="slide">
+          <div class="slide-num">Slide 2 — The two lanes</div>
+          <div class="slide-headline">Red team vs. blue team — which side are you on?</div>
+          <div class="slide-body">🔴 Red Team: Break in legally. Find gaps before the bad guys do.
+(Roles: Pen testers, red team operators, vulnerability researchers)
+
+🔵 Blue Team: Guard the gates. Detect, respond, protect.
+(Roles: SOC analysts, incident responders, cloud security engineers)</div>
+        </div>
+        <div class="slide">
+          <div class="slide-num">Slide 3 — The stats</div>
+          <div class="slide-headline">The numbers literally cannot lie.</div>
+          <div class="slide-body">• 33% job growth predicted by 2033
+• $124,910 median salary in the US
+• 46% of companies have unfilled cyber roles RIGHT NOW
+• 514,000+ job listings posted in just 12 months
+
+This field isn't just booming. It's overdue.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-num">Slide 4 — Myth bust</div>
+          <div class="slide-headline">"You have to be a CS major." Myth. Busted.</div>
+          <div class="slide-body">GRC analysts, compliance managers, and risk professionals come from law, business, finance, even psychology.
+
+Certifications bridge the gap. Your degree doesn't disqualify you — it might actually be your edge.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-num">Slide 5 — Student roadmap</div>
+          <div class="slide-headline">Your 3-year cheat code.</div>
+          <div class="slide-body">📍 Year 2: Security+ + TryHackMe
+📍 Year 3: Internship + eJPT certification
+📍 Year 4: CySA+ + job-ready portfolio
+
+Don't wait until senior year. The students who start early, win early.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-num">Slide 6 — CTA</div>
+          <div class="slide-headline">Which role sounds like you? Drop it in the comments 👇</div>
+          <div class="slide-body">Follow CYDASSA for weekly career breakdowns, lab challenges, and industry insights made for university students.
+
+#Cybersecurity #CyberCareers #StudentLife #CYDASSA #InfoSec #TechCareers</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="linkedin" class="social-content">
+      <div class="social-card">
+        <button class="copy-btn" onclick="copyContent(this)">Copy</button>
+        <div class="platform-label">LinkedIn Post</div>
+        <div class="social-text">There are 4.5 million unfilled cybersecurity jobs expected by 2026.
+
+Yet most university students still think cybersecurity is "just for hackers."
+
+Here's what we're covering at CYDASSA this week:
+
+Cybersecurity careers split into two main lanes — offensive (red team) and defensive (blue team). Red teamers simulate attacks to find weaknesses. Blue teamers monitor, protect, and respond.
+
+But the field is much wider than that:
+• SOC Analysts — the first responders of cyber incidents
+• Penetration Testers — legally break in to show gaps
+• Cloud Security Engineers — protect AWS, Azure, GCP infrastructure
+• GRC Analysts — governance, risk & compliance (no coding required)
+• Incident Responders — lead the cleanup after a breach
+
+The Equifax 2017 breach exposed 147 million consumers. WannaCry ransomware hit 150 countries in 72 hours. These weren't inevitable. They were preventable.
+
+What every student needs to know:
+
+1. You don't need a CS degree to enter this field
+2. Soft skills (communication, critical thinking) matter as much as technical ones
+3. Hands-on labs beat GPA every single time
+4. Start your internship search in Year 2, not Year 4
+
+The 3-year student roadmap:
+→ Year 2: CompTIA Security+ + TryHackMe
+→ Year 3: Internship + eJPT certification
+→ Year 4: CySA+/CEH + job-ready portfolio
+
+The talent gap is real. The opportunity is real. The question is: are you going to fill it?
+
+Drop a comment — which cybersecurity role interests you most?
+
+#Cybersecurity #CyberCareers #StudentLife #CYDASSA #TechCareers #InfoSec #UniversityLife</div>
+      </div>
+    </div>
+
+    <div id="twitter" class="social-content">
+      <div class="social-card">
+        <button class="copy-btn" onclick="copyContent(this)">Copy</button>
+        <div class="platform-label">X / Twitter Thread</div>
+        <div class="social-text">1/ There are 4.5 MILLION open cybersecurity jobs expected by 2026.
+
+Most students have no idea which role to pursue.
+
+Here's the complete breakdown you actually need 🧵 [CYDASSA]
+
+---
+
+2/ First, understand the two lanes:
+
+🔴 Red Team = Offensive
+You simulate attacks. Find the gaps. Think like the enemy.
+Roles: Pen tester, red team operator, vulnerability researcher
+
+🔵 Blue Team = Defensive
+You protect, monitor, respond.
+Roles: SOC analyst, incident responder, cloud security engineer
+
+---
+
+3/ But there's a THIRD lane most students completely miss:
+
+🟡 GRC (Governance, Risk & Compliance)
+- No coding required
+- Study NIST, ISO 27001 frameworks
+- Connects security to business strategy
+- Often pays just as well as technical roles
+
+---
+
+4/ Real talk: the myths stopping students from entering cyber
+
+❌ "I need a CS degree" — False
+❌ "It's all technical" — GRC says hi
+❌ "Entry-level is easy with just a diploma" — You need labs
+❌ "It's only about outside hackers" — Insider threats are huge
+
+---
+
+5/ The 3-year cheat code (start NOW):
+
+Year 2: Security+ cert + TryHackMe
+Year 3: Internship + eJPT
+Year 4: CySA+ or CEH + portfolio
+
+Don't wait until final year. The students who start early, win early.
+
+---
+
+6/ Quick wins you can do this week:
+
+✅ Sign up for TryHackMe (free)
+✅ Download the CompTIA Security+ study guide
+✅ Follow Katie Nickels or Marcus Hutchins on LinkedIn
+✅ Try Hack The Box beginner challenges
+✅ Join (ISC)² student membership for cert discounts
+
+---
+
+7/ Which lane sounds like you?
+
+🔴 Red Team
+🔵 Blue Team
+🟡 GRC
+
+Vote below or drop your answer 👇
+
+Follow @CYDASSA for weekly career breakdowns built for university students.
+
+#Cybersecurity #CyberCareers #StudentLife #InfoSec #CYDASSA</div>
+      </div>
+    </div>
+
+    <div id="script" class="social-content">
+      <div class="social-card">
+        <button class="copy-btn" onclick="copyContent(this)">Copy</button>
+        <div class="platform-label">60-Second Video Script</div>
+        <div class="social-text">[0–5 sec — HOOK, direct to camera, high energy]
+"There are 4.5 million unfilled cybersecurity jobs right now. That's not a typo. And universities are not producing enough graduates to fill them. So — which one is yours?"
+
+[5–20 sec — THE TWO LANES, fast cuts or split screen graphic]
+"Cybersecurity careers break into two lanes. Red team: you're the attacker. You legally break into systems to find gaps before real criminals do. Blue team: you're the defender. You monitor, protect, and respond when attacks happen."
+
+[20–35 sec — MYTH BUST, bold text appears on screen]
+"Quick myth bust. You don't need a CS degree. You don't need to be a hacker. There are GRC roles — governance, risk, compliance — that need zero coding. Communication skills matter just as much as technical ones."
+
+[35–50 sec — THE ROADMAP, animated checklist appears]
+"Here's your 3-year plan. Year 2: get your Security+ and start TryHackMe. Year 3: land an internship and earn your eJPT. Year 4: CySA+ and a job-ready portfolio. Don't wait until final year — start now."
+
+[50–60 sec — CTA, energy up, point to camera]
+"Drop in the comments: red team, blue team, or GRC? And follow CYDASSA for weekly career guides, lab challenges, and real industry insights built for students like you."
+
+[End card: CYDASSA logo + social handle + hashtags]
+#Cybersecurity #CYDASSA #CyberCareers #StudentLife</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+function switchSocial(id, el) {
+  document.querySelectorAll('.social-content').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.social-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+function copyContent(btn) {
+  const card = btn.closest('.social-card');
+  const text = card.querySelector('.social-text, .slide-deck') 
+    ? card.querySelector('.social-text')?.innerText || card.innerText 
+    : card.innerText;
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text.trim();
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
